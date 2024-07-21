@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "f85c970e-3c1c-497f-9c18-8e1dbba91bb3",
+		"name": "Brand Product Prices Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "845646"
+	},
+	"item": [
+		{
+			"name": "Test My Api",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/prices/brand/:brand/product/:product/date/:date",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"brand",
+						":brand",
+						"product",
+						":product",
+						"date",
+						":date"
+					],
+					"variable": [
+						{
+							"key": "brand",
+							"value": "1"
+						},
+						{
+							"key": "product",
+							"value": "35455"
+						},
+						{
+							"key": "date",
+							"value": "2020-06-16 21.00.00"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
