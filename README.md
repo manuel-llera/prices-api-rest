@@ -19,6 +19,10 @@ If you run this project will exist this initial inserts like initial data.
 
 ### Swagger
  url => http://localhost:8080/swagger-ui/index.html
+ 
+ Documentation and test environment included
+ 
+ For testing also included in /docs folder Postman file to import named "Brand Product Prices Api.postman_collection.json"
 
 ### H2 Console
 url => http://localhost:8080/h2-ui/
