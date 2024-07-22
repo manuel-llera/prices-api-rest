@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
 			MissingServletRequestParameterException mSRPEx, WebRequest request) {
 
 		return PricesResponseDto.builder()
-				.errorMessage("Error validacion parametro")
+				.errorMessage("Error parameter validation")
 			.build();
 	}
 
