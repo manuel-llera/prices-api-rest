@@ -1,9 +1,5 @@
 package com.grid.core.prices.restapi.service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +16,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class PricesService {
 	
-	private static final String PRICES_NOT_FOUND = "Prices not found";
+	private static final String PRICE_NOT_FOUND = "Price not found";
 
 	@Autowired
 	BrandRepository brandRepository;
@@ -41,41 +37,37 @@ public class PricesService {
 		
 		Brand brand = brandRepository.findAllById(Long.parseLong(pricesRequestDto.getBrandId()) );
 		
-		List<Prices> pricesList = pricesRepository.findBydBrandIdAndProductIdAndDate(
-															brand,
-															pricesRequestDto.getProductId(),
-															pricesRequestDto.getDate()
-														);
+		Prices price = pricesRepository.findTopPriorityByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+												brand,
+												pricesRequestDto.getProductId(),
+												pricesRequestDto.getDate(),
+												pricesRequestDto.getDate()
+											);
 		
-		return composeResponse(pricesList);
+		return composeResponse(price);
 	}
 
-	private PricesResponseDto composeResponse(List<Prices> pricesList) {
+	private PricesResponseDto composeResponse(Prices price) {
 		log.debug("Building response");
-
-		// if prices list is empty an error message is set 
-		if (!pricesList.isEmpty()) {
-			return createPricesResponseDto(pricesList);
+		
+		// if price is empty an error message is set 
+		if (price != null) {
+			return createPriceResponseDto(price);
 
 		} else {
-			log.debug("Response with error message: " + PRICES_NOT_FOUND);
+			log.debug("Response with error message: " + PRICE_NOT_FOUND);
 			return PricesResponseDto.builder()
-					.errorMessage(PRICES_NOT_FOUND)
+					.errorMessage(PRICE_NOT_FOUND)
 				.build();
 		}
 		
 	}
 
-	private PricesResponseDto createPricesResponseDto(List<Prices> pricesList) {
-		// filter prices list by max priority
-		Prices price = pricesList.stream()
-			      .max(Comparator.comparing(Prices::getPriority))
-			      .orElseThrow(NoSuchElementException::new);
-	
+	private PricesResponseDto createPriceResponseDto(Prices price) {
+		
 		return PricesResponseDto.builder()
 							.productId(price.getProductId())
 							.brandId(Long.toString(price.getBrandId().getId()))
-							.priceList(Integer.toString(price.getPriceList()))
 							.startDate(price.getStartDate().toString())
 							.endDate(price.getEndDate().toString())
 							.price(price.getPrice())
