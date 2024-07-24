@@ -17,6 +17,11 @@ Exist two sql files to set data required for the exercise.
 If you compile this project this sql files are used to test the application.
 If you run this project will exist this initial inserts like initial data.
 
+### Coverage report
+
+Coverage report included with jacoco
+After install command: file is generated with report in target folder like "./target/site/jacoco/index.html"
+
 ### Swagger
  url => http://localhost:8080/swagger-ui/index.html
  
