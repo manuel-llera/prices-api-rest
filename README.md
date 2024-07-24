@@ -21,6 +21,7 @@ If you run this project will exist this initial inserts like initial data.
 
  Coverage report included with jacoco
  After install command: file is generated with report in target folder like "./target/site/jacoco/index.html"
+
  Maybe, if target folder was not generated, execute this command bedore install command => mvn wrapper:wrapper
 
 ### Swagger
