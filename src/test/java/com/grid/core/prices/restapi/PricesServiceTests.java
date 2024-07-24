@@ -26,7 +26,9 @@ import com.grid.core.prices.restapi.service.PricesService;
 @AutoConfigureMockMvc
 class PricesServiceTests {
 
+	private static final String PRICE_NOT_FOUND = "Price not found";
 	private static final String ZARA_BRAND_ID = "1";
+	private static final String UNKNOW_BRAND_ID = "000";
 	private static final String PRODUCT_ID_35455 = "35455";
 	private static final SimpleDateFormat requestDateFormat = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
 	private static final String _2020_06_14_10_00_00 = "2020-06-14 10.00.00";
@@ -141,6 +143,22 @@ class PricesServiceTests {
 		PricesResponseDto pricesResponseDto = pricesService.getPricesInfo(requestDto);
 		assertThat(pricesResponseDto).isNotNull();
 		assertThat(pricesResponseDto.getPrice()).isEqualTo(PRICE_38_95);
+	}
+	
+	@Test
+	void whenGetPricesInfoForUnknowBrandResponsePriceNotFound() throws ParseException {
+		
+		// when
+		PricesRequestDto requestDto = PricesRequestDto.builder()
+				.brandId(UNKNOW_BRAND_ID)
+				.productId(PRODUCT_ID_35455)
+				.date(mockDate(_2020_06_16_21_00_00))
+			.build();
+		
+		//then
+		PricesResponseDto pricesResponseDto = pricesService.getPricesInfo(requestDto);
+		assertThat(pricesResponseDto).isNotNull();
+		assertThat(pricesResponseDto.getErrorMessage()).isEqualTo(PRICE_NOT_FOUND);
 	}
 
 	private Date mockDate(String stringDate) throws ParseException {

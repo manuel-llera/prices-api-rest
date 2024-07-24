@@ -12,7 +12,6 @@ import lombok.Data;
 public class PricesResponseDto {
 	private String productId;
 	private String brandId;
-	private String priceList;
 	private String startDate;
 	private String endDate;
 	private Double price;
