@@ -20,6 +20,7 @@ import com.grid.core.prices.restapi.service.PricesService;
 class PricesApiControllerTests {
 	
     private static final String END_POINT_1 = "/prices/brand/1/product/35455/date/2020-06-14 10.00.00";
+    private static final String END_POINT_DATE_PARAM_NOT_OK = "/prices/brand/1/product/35455/date/123";
     
     @Autowired
     private MockMvc mockMvc;
@@ -37,6 +38,18 @@ class PricesApiControllerTests {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+    
+    @Test
+	void whenRequestWithCorrectParamsReturn400BadRequestWithPriceNotFoundErrorMessage() throws Exception {
+		
+		// when
+    	PricesRequestDto mockRequest = Mockito.mock(PricesRequestDto.class);
+    	Mockito.when(pricesService.getPricesInfo(mockRequest)).thenReturn(mockPricesResponseDto());
+    	
+        mockMvc.perform(get(END_POINT_DATE_PARAM_NOT_OK).contentType("application/json"))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+	}
     
     private PricesResponseDto mockPricesResponseDto() {
     	return PricesResponseDto.builder().build();
